@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-// mongoose.connect('mongodb+srv://saurabhdwivedi2310:12344321@cluster0.hkavumb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
-
-const config = require('../config.js');
-mongoose.connect(config.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected...'))
-  .catch(err => console.log(err));
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.error('Error connecting to MongoDB:', err));
 
 
 const productSchema = new mongoose.Schema({
@@ -13,9 +14,9 @@ const productSchema = new mongoose.Schema({
     name: { type: String, required: true }, 
     price: { type: Number, required: true },
     featured: { type: Boolean, default: false },
-    rating: { type: Number },
+    rating: { type: Number }, 
     createdAt: { type: Date, default: Date.now },
-    company: { type: String, required: true }
+    company: { type: String, required: true } 
   });
   
   const userSchema = new mongoose.Schema({
